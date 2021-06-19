@@ -1,0 +1,11 @@
+.description {
+    border-left: 1px solid #ccc;
+    padding-left: 5px;
+    display: flex;
+}
+
+.daily {
+    display: flex;
+    justify-content: space-between;
+    min-width: 15rem;
+}
