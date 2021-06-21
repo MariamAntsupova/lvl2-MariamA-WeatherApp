@@ -5,6 +5,7 @@ import { useState } from 'react';
 import './Input.scss';
 import ModalComponent from '../modal/ModalComponent';
 
+
 const API_KEY = 'a68dc28420f548a1880f2eb3acaaaa56';
 
 function Input (){
