@@ -1,0 +1,12 @@
+.modalTop {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+    justify-content: space-between;
+    .closeButton {
+        background-color: none;
+        border: none;
+        padding: 10px;
+    }
+}

@@ -1,15 +1,12 @@
 import React from 'react' ; 
-import FetchApi from '../fetch/FetchAPI';
 import './Daily.scss';
-function Daily (API_KEY , text){
-    const { data } = FetchApi(
-        `https://api.weatherbit.io/v2.0/forecast/daily?&city=${text}&key=${API_KEY}&days=8`
-    );
+function Daily (){
+
     return(
         <div className='cont2'>
             <p>8 Day-forecast</p>
             <div className="daily">
-            {(typeof data.data != 'undefined') ? (
+            {/* {(typeof data.data != 'undefined') ? (
                 <ul>
                     {data.data.map((el, index) => {
                         return (
@@ -17,9 +14,9 @@ function Daily (API_KEY , text){
                         )
                     })}
                 </ul>
-            ) : (' ')}
+            ) : (' ')} */}
                 <div className='day'>
-                    <p>{data.city_name}</p>
+                    <p></p>
                     <p>Sat, Jun 12</p>
                     <p>Sat, Jun 12</p>
                     <p>Sat, Jun 12</p>
