@@ -5,6 +5,7 @@
 }
 
 .daily {
+    flex-wrap: wrap;
     display: flex;
     justify-content: space-between;
     min-width: 15rem;

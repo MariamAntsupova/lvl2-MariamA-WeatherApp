@@ -4,9 +4,10 @@ import Daily from '../daily/Daily';
 import { useState } from 'react';
 import './Input.scss';
 import ModalComponent from '../modal/ModalComponent';
+import Loader from '../loader/Loader';
 
 
-const API_KEY = 'a68dc28420f548a1880f2eb3acaaaa56';
+const API_KEY = '50b6e42e593e4e14ab7e4254091d5cae';
 
 function Input (){
     var date = new Date().getDate(); 
@@ -15,16 +16,18 @@ function Input (){
     var hours = new Date().getHours(); 
     var min = new Date().getMinutes(); 
     const [text, setText]=useState('Tbilisi');
+    const [newText , setNewText] = useState();
     const [data , setData]= useState([])
     const [modalIsOpen , setModalIsOpen] = useState(false);
-    console.log(data)
+    const [Loading, setLoading] = useState([]);
 
     const getDatas = (e) => {
         !!e && e.preventDefault();
-        setText (text);
+        setNewText (text);
     }
 
     useEffect(()=>{
+        setLoading(true)
         fetch(`https://api.weatherbit.io/v2.0/forecast/hourly?city=${text}&key=${API_KEY}&hours=1`)
         .then(response => response.json())
         .then(data => {
@@ -39,38 +42,44 @@ function Input (){
                 visibility: data.data[0].vis,
             })
         })
-        console.log(data)
-    },[text])
+        .finally(()=>{
+            setLoading(false)
+        })
+    },[newText])
     return(
         <div>
-            <form onSubmit={getDatas}>
+            <form onClick={getDatas} >
                 <div className='inputval'>
-                    <input className="input" onChange={e => setText(e.target.value)} />
-                    <button className="todo-button" type="submit" >
+                    <input className="input" onChange={e => setText(e.target.value)}/>
+                    <button className="todo-button" type="submit">
                         Submit
                     </button> 
             </div>
             </form>
 
             <div className='cont'>
-
-            <div className="city" key={data.id}>
-                    <p>{hours}:{min} , {month}/{date}/{year}</p>
-                    <h1>{data.city} , {data.code}</h1>
-                    <p className='weather'><img src={`https://www.weatherbit.io/static/img/icons/${data.icon}.png`} alt='w-p' className='image'/> {data.temp}&#176;C</p>
-                    <p>Feels like {data.temp}&#176;C. {data.description}</p>
-                    <div className='description'>
-                        <p>0.9m/s NNW    1023hPa</p>
-                        <p>Humidity: {data.humidity} UV: {data.uv}</p>
-                        <p>Dew Point: {data.dewpoint} Visibility: {data.visibility}</p>
-                    </div>
-                    <button className='hourly-button' onClick = {() => setModalIsOpen(true)}>Hourly forecast</button>
-                    <ModalComponent modalIsOpen = {modalIsOpen} setModalIsOpen = {setModalIsOpen} text={text} API_KEY={API_KEY}/>
-             </div>
-            <Daily API_KEY={API_KEY} text ={text}/>
+                {
+                    text && (
+                        <Loader isLoading={Loading}>
+                            <div className="city" key={data.id}>
+                                <p>{hours}:{min} , {month}/{date}/{year}</p>
+                                <h1>{data.city} , {data.code}</h1>
+                                <p className='weather'><img src={`https://www.weatherbit.io/static/img/icons/${data.icon}.png`} alt='w-p' className='image'/> {data.temp}&#176;C</p>
+                                <p>Feels like {data.temp}&#176;C. {data.description}</p>
+                                <div className='description'>
+                                    <p>0.9m/s NNW    1023hPa</p>
+                                    <p>Humidity: {data.humidity} UV: {data.uv}</p>
+                                    <p>Dew Point: {data.dewpoint} Visibility: {data.visibility}</p>
+                                </div>
+                                <button className='hourly-button' onClick = {() => setModalIsOpen(true)}>Hourly forecast</button>
+                            </div>
+                        </Loader>
+                    )
+                }
+                <ModalComponent modalIsOpen = {modalIsOpen} setModalIsOpen = {setModalIsOpen} text={text} API_KEY={API_KEY}/>
+                <Daily API_KEY={API_KEY} text ={text} newText={newText}/>
             </div>
         </div>
-        
 
     )
 
