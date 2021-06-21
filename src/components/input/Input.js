@@ -14,7 +14,6 @@ function Input (){
     var year = new Date().getFullYear(); 
     var hours = new Date().getHours(); 
     var min = new Date().getMinutes(); 
-    var sec = new Date().getSeconds();
     const [text, setText]=useState('Tbilisi');
     const [data , setData]= useState([])
     const [modalIsOpen , setModalIsOpen] = useState(false);
@@ -34,7 +33,10 @@ function Input (){
                 code: data.country_code,
                 temp: data.data[0].temp,
                 description: data.data[0].weather.description,
-                icon: data.data[0].weather.icon
+                icon: data.data[0].weather.icon,
+                uv: data.data[0].uv,
+                dewpoint: data.data[0].dewpt,
+                visibility: data.data[0].vis,
             })
         })
         console.log(data)
@@ -53,17 +55,17 @@ function Input (){
             <div className='cont'>
 
             <div className="city" key={data.id}>
-                    <p>{hours}:{min}:{sec} , {month}/{date}/{year}</p>
+                    <p>{hours}:{min} , {month}/{date}/{year}</p>
                     <h1>{data.city} , {data.code}</h1>
                     <p className='weather'><img src={`https://www.weatherbit.io/static/img/icons/${data.icon}.png`} alt='w-p' className='image'/> {data.temp}&#176;C</p>
                     <p>Feels like {data.temp}&#176;C. {data.description}</p>
                     <div className='description'>
                         <p>0.9m/s NNW    1023hPa</p>
-                        <p>0.9m/s NNW    1023hPa</p>
-                        <p>0.9m/s NNW    1023hPa</p>
+                        <p>Humidity: {data.humidity} UV: {data.uv}</p>
+                        <p>Dew Point: {data.dewpoint} Visibility: {data.visibility}</p>
                     </div>
                     <button className='hourly-button' onClick = {() => setModalIsOpen(true)}>Hourly forecast</button>
-                    <ModalComponent modalIsOpen = {modalIsOpen} setModalIsOpen = {setModalIsOpen} />
+                    <ModalComponent modalIsOpen = {modalIsOpen} setModalIsOpen = {setModalIsOpen} text={text} API_KEY={API_KEY}/>
              </div>
             <Daily API_KEY={API_KEY} text ={text}/>
             </div>
