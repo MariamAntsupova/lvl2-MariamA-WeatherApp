@@ -7,7 +7,7 @@ import ModalComponent from '../modal/ModalComponent';
 import Loader from '../loader/Loader';
 
 
-const API_KEY = '50b6e42e593e4e14ab7e4254091d5cae';
+const API_KEY = '2cf3281c7c544d39a611ae69a3e325fa';
 
 function Input (){
     var date = new Date().getDate(); 
